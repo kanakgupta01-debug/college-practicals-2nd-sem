@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitLife – Fitness Training Program</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind custom config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand:  '#22c55e',   /* green-500 */
+            dark:   '#0f172a',   /* slate-900 */
+            card:   '#1e293b',   /* slate-800 */
+          },
+          fontFamily: {
+            display: ['Georgia', 'serif'],
+            body:    ['system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* smooth scroll */
+    html { scroll-behavior: smooth; }
+
+    /* hero gradient */
+    .hero-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #064e3b 50%, #0f172a 100%);
+    }
+
+    /* card hover glow */
+    .service-card:hover {
+      box-shadow: 0 0 28px rgba(34,197,94,.25);
+      transform: translateY(-4px);
+    }
+    .service-card { transition: transform .25s, box-shadow .25s; }
+  </style>
+</head>
+<body class="bg-dark text-white font-body">
+
+  <!-- ════════════════════════════════════════
+       HEADER / NAVBAR
+       Mobile  → vertical stack (flex-col)
+       md+     → horizontal row  (md:flex-row)
+  ════════════════════════════════════════ -->
+  <header class="bg-dark/95 backdrop-blur sticky top-0 z-50 border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+
+      <!-- Brand -->
+      <a href="#" class="text-2xl font-display font-bold text-brand tracking-tight">
+        Fit<span class="text-white">Life</span>
+      </a>
+
+      <!-- Nav links -->
+      <nav>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold text-slate-400">
+          <li><a href="#home"     class="hover:text-brand transition-colors">Home</a></li>
+          <li><a href="#programs" class="hover:text-brand transition-colors">Programs</a></li>
+          <li><a href="#trainers" class="hover:text-brand transition-colors">Trainers</a></li>
+          <li><a href="#contact"  class="hover:text-brand transition-colors">Contact</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════
+       SECTION 1 – HERO
+  ════════════════════════════════════════ -->
+  <section id="home" class="hero-bg py-24 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+
+      <!-- Badge -->
+      <span class="inline-block bg-brand/20 text-brand text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full mb-6">
+        #1 Fitness Program 2026
+      </span>
+
+      <!-- Heading -->
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+        Transform Your Body.<br/>
+        <span class="text-brand">Elevate Your Life.</span>
+      </h1>
+
+      <!-- Description -->
+      <p class="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+        FitLife offers world-class personal training, yoga classes, and diet plans
+        designed to help you reach peak performance — from anywhere, at any pace.
+      </p>
+
+      <!-- CTA Button -->
+      <a href="#programs"
+         class="inline-block bg-brand hover:bg-green-400 text-dark font-bold text-lg px-10 py-4 rounded-full shadow-lg shadow-green-900/40 transition-all duration-200 hover:scale-105">
+        Join Now →
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 2 – SERVICES
+       Mobile  → 1 col
+       md      → 2 col
+       lg      → 3 col
+  ════════════════════════════════════════ -->
+  <section id="programs" class="py-20 px-4 bg-slate-900">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Section heading -->
+      <div class="text-center mb-14">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">Our Services</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Pick a program that fits your goal. Every plan is led by certified professionals.</p>
+        <div class="mt-4 h-1 w-16 bg-brand rounded mx-auto"></div>
+      </div>
+
+      <!-- Cards grid: 1 → 2 → 3 columns -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Card 1 – Weight Training -->
+        <div class="service-card bg-card rounded-2xl p-8 border border-slate-700">
+          <div class="text-4xl mb-5">🏋️</div>
+          <h3 class="text-xl font-bold text-white mb-3">Weight Training</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Build strength and muscle with science-backed progressive overload programs
+            tailored for beginners to advanced athletes.
+          </p>
+          <ul class="text-slate-400 text-sm space-y-2 mb-6">
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Personalized workout plan</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Certified strength coaches</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Weekly progress tracking</li>
+          </ul>
+          <p class="text-brand font-bold text-lg">₹2,499<span class="text-slate-500 font-normal text-sm">/month</span></p>
+        </div>
+
+        <!-- Card 2 – Yoga Classes -->
+        <div class="service-card bg-card rounded-2xl p-8 border border-brand/50 relative">
+          <!-- Popular badge -->
+          <span class="absolute top-4 right-4 bg-brand text-dark text-xs font-bold px-3 py-1 rounded-full">Popular</span>
+          <div class="text-4xl mb-5">🧘</div>
+          <h3 class="text-xl font-bold text-white mb-3">Yoga Classes</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Find balance, flexibility, and mindfulness with guided yoga sessions from
+            beginner Hatha to advanced Vinyasa flows.
+          </p>
+          <ul class="text-slate-400 text-sm space-y-2 mb-6">
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Live &amp; recorded sessions</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Flexibility &amp; stress relief</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> All skill levels welcome</li>
+          </ul>
+          <p class="text-brand font-bold text-lg">₹1,799<span class="text-slate-500 font-normal text-sm">/month</span></p>
+        </div>
+
+        <!-- Card 3 – Diet Plans -->
+        <div class="service-card bg-card rounded-2xl p-8 border border-slate-700">
+          <div class="text-4xl mb-5">🥗</div>
+          <h3 class="text-xl font-bold text-white mb-3">Diet Plans</h3>
+          <p class="text-slate-400 text-sm leading-relaxed mb-6">
+            Custom nutrition plans crafted by registered dietitians to fuel your
+            workouts and accelerate fat loss or muscle gain.
+          </p>
+          <ul class="text-slate-400 text-sm space-y-2 mb-6">
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Personalised meal plans</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Macro &amp; calorie tracking</li>
+            <li class="flex items-center gap-2"><span class="text-brand">✓</span> Dietitian consultations</li>
+          </ul>
+          <p class="text-brand font-bold text-lg">₹1,299<span class="text-slate-500 font-normal text-sm">/month</span></p>
+        </div>
+
+      </div><!-- /.grid -->
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 3 – TRAINERS
+  ════════════════════════════════════════ -->
+  <section id="trainers" class="py-20 px-4 bg-dark">
+    <div class="max-w-6xl mx-auto">
+
+      <div class="text-center mb-14">
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">Meet Our Trainers</h2>
+        <p class="text-slate-400 max-w-xl mx-auto">Certified experts dedicated to your transformation.</p>
+        <div class="mt-4 h-1 w-16 bg-brand rounded mx-auto"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Trainer 1 -->
+        <div class="text-center bg-card rounded-2xl p-8 border border-slate-700">
+          <div class="w-20 h-20 bg-brand/20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">👨‍💪</div>
+          <h4 class="font-bold text-white text-lg">Arjun Sharma</h4>
+          <p class="text-brand text-sm font-semibold mb-2">Strength & Conditioning</p>
+          <p class="text-slate-400 text-sm">8 years experience · NSCA Certified · 500+ clients transformed</p>
+        </div>
+
+        <!-- Trainer 2 -->
+        <div class="text-center bg-card rounded-2xl p-8 border border-slate-700">
+          <div class="w-20 h-20 bg-brand/20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">🧘‍♀️</div>
+          <h4 class="font-bold text-white text-lg">Priya Mehta</h4>
+          <p class="text-brand text-sm font-semibold mb-2">Yoga & Mindfulness</p>
+          <p class="text-slate-400 text-sm">6 years experience · RYT-500 · Specialises in therapeutic yoga</p>
+        </div>
+
+        <!-- Trainer 3 -->
+        <div class="text-center bg-card rounded-2xl p-8 border border-slate-700">
+          <div class="w-20 h-20 bg-brand/20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">🥗</div>
+          <h4 class="font-bold text-white text-lg">Neha Kapoor</h4>
+          <p class="text-brand text-sm font-semibold mb-2">Registered Dietitian</p>
+          <p class="text-slate-400 text-sm">5 years experience · M.Sc. Nutrition · Sports diet specialist</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════ -->
+  <footer id="contact" class="bg-slate-900 border-t border-slate-800 py-12 px-4">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="font-display text-xl font-bold text-white mb-4">Contact Us</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li>📧 hello@fitlife.in</li>
+          <li>📞 +91 98765 43210</li>
+          <li>📍 12, Connaught Place, New Delhi – 110001</li>
+          <li>🕘 Mon – Sat: 6 AM – 9 PM</li>
+        </ul>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="font-display text-xl font-bold text-white mb-4">Quick Links</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li><a href="#home"     class="hover:text-brand transition-colors">Home</a></li>
+          <li><a href="#programs" class="hover:text-brand transition-colors">Programs</a></li>
+          <li><a href="#trainers" class="hover:text-brand transition-colors">Trainers</a></li>
+          <li><a href="#contact"  class="hover:text-brand transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="max-w-6xl mx-auto mt-10 pt-6 border-t border-slate-800 text-center text-slate-500 text-sm">
+      &copy; 2026 <span class="text-brand font-semibold">FitLife</span>. All rights reserved.
+      &nbsp;|&nbsp; Experiment 3 – Tailwind CSS Mobile-First Design
+    </div>
+  </footer>
+
+</body>
+</html>

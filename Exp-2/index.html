@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechStore – Experiment 2</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root {
+      --clr-bg:      #0d0d0d;
+      --clr-surface: #161616;
+      --clr-card:    #1e1e1e;
+      --clr-border:  #2a2a2a;
+      --clr-accent:  #00e5ff;
+      --clr-accent2: #ff4d6d;
+      --clr-text:    #e8e8e8;
+      --clr-muted:   #888;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: var(--clr-surface) !important;
+      border-bottom: 1px solid var(--clr-border);
+      padding: .9rem 0;
+    }
+
+    .navbar-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      color: var(--clr-accent) !important;
+      letter-spacing: -1px;
+    }
+
+    .navbar-brand span { color: var(--clr-accent2); }
+
+    .navbar-nav .nav-link {
+      color: var(--clr-muted) !important;
+      font-weight: 500;
+      letter-spacing: .3px;
+      padding: .4rem .9rem !important;
+      transition: color .2s;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+      color: var(--clr-accent) !important;
+    }
+
+    .navbar-toggler {
+      border-color: var(--clr-border);
+    }
+    .navbar-toggler-icon { filter: invert(.6); }
+
+    /* ── HERO STRIP ── */
+    .hero {
+      background: linear-gradient(135deg, #0d0d0d 0%, #111827 100%);
+      border-bottom: 1px solid var(--clr-border);
+      padding: 4rem 0 3.5rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      color: #fff;
+    }
+    .hero h1 span { color: var(--clr-accent); }
+    .hero p { color: var(--clr-muted); font-size: 1.05rem; margin-bottom: 0; }
+
+    /* ── SECTION ── */
+    .section-head {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      color: #fff;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+    .section-head::after {
+      content: '';
+      display: block;
+      height: 3px;
+      width: 50%;
+      background: var(--clr-accent);
+      margin-top: 6px;
+    }
+
+    /* ── PRODUCT CARDS ── */
+    .product-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--clr-accent);
+      box-shadow: 0 0 24px rgba(0,229,255,.12);
+    }
+
+    .product-card .img-wrap {
+      position: relative;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+
+    .product-card:hover img { transform: scale(1.06); }
+
+    .badge-pos {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: .7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: .35em .7em;
+      border-radius: 6px;
+    }
+
+    .badge-new  { background: var(--clr-accent);  color: #000; }
+    .badge-sale { background: var(--clr-accent2); color: #fff; }
+
+    .card-body-custom {
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card-body-custom h5 {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: .5rem;
+    }
+
+    .card-body-custom p {
+      color: var(--clr-muted);
+      font-size: .88rem;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .price {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.2rem;
+      color: var(--clr-accent);
+      margin: .8rem 0 1rem;
+    }
+
+    .price .old {
+      font-size: .8rem;
+      color: var(--clr-muted);
+      text-decoration: line-through;
+      margin-left: .4rem;
+    }
+
+    .btn-view {
+      background: transparent;
+      border: 1.5px solid var(--clr-accent);
+      color: var(--clr-accent);
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: .5px;
+      padding: .5rem 1rem;
+      transition: background .2s, color .2s;
+      width: 100%;
+    }
+
+    .btn-view:hover {
+      background: var(--clr-accent);
+      color: #000;
+    }
+
+    /* ── MODAL ── */
+    .modal-content {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: 16px;
+      color: var(--clr-text);
+    }
+
+    .modal-header {
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    .modal-title {
+      font-family: 'Space Mono', monospace;
+      color: #fff;
+    }
+
+    .btn-close { filter: invert(1); }
+
+    .modal-footer {
+      border-top: 1px solid var(--clr-border);
+    }
+
+    .modal-spec {
+      display: flex;
+      justify-content: space-between;
+      padding: .4rem 0;
+      border-bottom: 1px solid var(--clr-border);
+      font-size: .9rem;
+    }
+
+    .modal-spec:last-child { border-bottom: none; }
+    .modal-spec .label { color: var(--clr-muted); }
+    .modal-spec .val   { color: #fff; font-weight: 600; }
+
+    .btn-add {
+      background: var(--clr-accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      padding: .55rem 1.5rem;
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: 1.5px solid var(--clr-border);
+      color: var(--clr-muted);
+      border-radius: 8px;
+      padding: .55rem 1.2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--clr-surface);
+      border-top: 1px solid var(--clr-border);
+      padding: 2rem 0;
+      text-align: center;
+      color: var(--clr-muted);
+      font-size: .88rem;
+    }
+
+    footer .brand {
+      font-family: 'Space Mono', monospace;
+      color: var(--clr-accent);
+    }
+
+    .social-icons a {
+      color: var(--clr-muted);
+      font-size: 1.3rem;
+      margin: 0 .5rem;
+      transition: color .2s;
+    }
+
+    .social-icons a:hover { color: var(--clr-accent); }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       NAVBAR
+  ══════════════════════════════ -->
+  <nav class="navbar navbar-expand-md sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">Tech<span>Store</span></a>
+
+      <button class="navbar-toggler" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════
+       HERO
+  ══════════════════════════════ -->
+  <section class="hero">
+    <div class="container">
+      <h1>Next-Gen <span>Tech</span></h1>
+      <p>Premium gadgets curated for the modern creator &amp; enthusiast.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       PRODUCT SECTION
+       col-12 → 1/row on sm
+       col-md-6 → 2/row on md
+       col-lg-4 → 3/row on lg+
+  ══════════════════════════════ -->
+  <section class="py-5">
+    <div class="container">
+      <h2 class="section-head">Our Products</h2>
+
+      <div class="row g-4">
+
+        <!-- Card 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Wireless Earbuds"/>
+              <span class="badge-pos badge-new">New</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>ProSound Earbuds X1</h5>
+              <p>Active noise cancellation, 30-hr battery, IPX5 waterproof. Immersive audio anywhere.</p>
+              <div class="price">₹5,999</div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal1">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" alt="Smart Watch"/>
+              <span class="badge-pos badge-sale">Sale</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>SmartWave Watch Pro</h5>
+              <p>AMOLED display, health tracking, GPS, 7-day battery. Your wrist, upgraded.</p>
+              <div class="price">₹12,499 <span class="old">₹18,000</span></div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal2">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1593640408182-31c228f634c2?w=600&q=80" alt="Mechanical Keyboard"/>
+              <span class="badge-pos badge-new">New</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>KeyForge TKL RGB</h5>
+              <p>Tenkeyless mechanical keyboard with hot-swap switches and per-key RGB lighting.</p>
+              <div class="price">₹8,299</div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal3">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80" alt="Portable SSD"/>
+              <span class="badge-pos badge-sale">Sale</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>FlashDrive SSD 1TB</h5>
+              <p>1000 MB/s read speed, USB-C, shockproof aluminium body. Speed meets portability.</p>
+              <div class="price">₹7,499 <span class="old">₹10,000</span></div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal4">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" alt="Gaming Mouse"/>
+              <span class="badge-pos badge-new">New</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>PrecisionClick G9</h5>
+              <p>26,000 DPI optical sensor, 8 programmable buttons, ultra-light 58g chassis.</p>
+              <div class="price">₹4,199</div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal5">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="product-card">
+            <div class="img-wrap">
+              <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80" alt="Smart Speaker"/>
+              <span class="badge-pos badge-sale">Sale</span>
+            </div>
+            <div class="card-body-custom">
+              <h5>SoundDome Mini 360</h5>
+              <p>360° spatial audio, built-in smart assistant, multi-room sync. Fill every room.</p>
+              <div class="price">₹3,699 <span class="old">₹5,500</span></div>
+              <button class="btn-view" data-bs-toggle="modal" data-bs-target="#modal6">
+                <i class="bi bi-eye me-1"></i> View Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.row -->
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       MODALS
+  ══════════════════════════════ -->
+
+  <!-- Modal 1 -->
+  <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal1Label">ProSound Earbuds X1</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" class="img-fluid rounded mb-3" alt="Earbuds"/>
+          <div class="modal-spec"><span class="label">Battery</span><span class="val">30 Hours</span></div>
+          <div class="modal-spec"><span class="label">Noise Cancellation</span><span class="val">Active (ANC)</span></div>
+          <div class="modal-spec"><span class="label">Water Resistance</span><span class="val">IPX5</span></div>
+          <div class="modal-spec"><span class="label">Connectivity</span><span class="val">Bluetooth 5.3</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹5,999</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2 -->
+  <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal2Label">SmartWave Watch Pro</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80" class="img-fluid rounded mb-3" alt="Watch"/>
+          <div class="modal-spec"><span class="label">Display</span><span class="val">1.4″ AMOLED</span></div>
+          <div class="modal-spec"><span class="label">Battery</span><span class="val">7 Days</span></div>
+          <div class="modal-spec"><span class="label">GPS</span><span class="val">Built-in</span></div>
+          <div class="modal-spec"><span class="label">Health Sensors</span><span class="val">Heart Rate, SpO2</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹12,499</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3 -->
+  <div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="modal3Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal3Label">KeyForge TKL RGB</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1593640408182-31c228f634c2?w=600&q=80" class="img-fluid rounded mb-3" alt="Keyboard"/>
+          <div class="modal-spec"><span class="label">Layout</span><span class="val">TKL (87-key)</span></div>
+          <div class="modal-spec"><span class="label">Switches</span><span class="val">Hot-swap Mechanical</span></div>
+          <div class="modal-spec"><span class="label">Backlighting</span><span class="val">Per-key RGB</span></div>
+          <div class="modal-spec"><span class="label">Connection</span><span class="val">USB-C / Wireless</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹8,299</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4 -->
+  <div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="modal4Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal4Label">FlashDrive SSD 1TB</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&q=80" class="img-fluid rounded mb-3" alt="SSD"/>
+          <div class="modal-spec"><span class="label">Capacity</span><span class="val">1 TB</span></div>
+          <div class="modal-spec"><span class="label">Read Speed</span><span class="val">1000 MB/s</span></div>
+          <div class="modal-spec"><span class="label">Interface</span><span class="val">USB-C 3.2 Gen 2</span></div>
+          <div class="modal-spec"><span class="label">Body</span><span class="val">Shockproof Aluminium</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹7,499</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5 -->
+  <div class="modal fade" id="modal5" tabindex="-1" aria-labelledby="modal5Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal5Label">PrecisionClick G9</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" class="img-fluid rounded mb-3" alt="Mouse"/>
+          <div class="modal-spec"><span class="label">DPI</span><span class="val">Up to 26,000</span></div>
+          <div class="modal-spec"><span class="label">Buttons</span><span class="val">8 Programmable</span></div>
+          <div class="modal-spec"><span class="label">Weight</span><span class="val">58g Ultra-light</span></div>
+          <div class="modal-spec"><span class="label">Connection</span><span class="val">Wired USB-A</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹4,199</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6 -->
+  <div class="modal fade" id="modal6" tabindex="-1" aria-labelledby="modal6Label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal6Label">SoundDome Mini 360</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80" class="img-fluid rounded mb-3" alt="Speaker"/>
+          <div class="modal-spec"><span class="label">Audio</span><span class="val">360° Spatial</span></div>
+          <div class="modal-spec"><span class="label">Assistant</span><span class="val">Built-in Smart AI</span></div>
+          <div class="modal-spec"><span class="label">Multi-room</span><span class="val">Yes, Wi-Fi Sync</span></div>
+          <div class="modal-spec"><span class="label">Battery</span><span class="val">12 Hours</span></div>
+          <div class="modal-spec"><span class="label">Price</span><span class="val" style="color:var(--clr-accent)">₹3,699</span></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close-modal" data-bs-dismiss="modal">Close</button>
+          <button class="btn-add"><i class="bi bi-cart-plus me-1"></i> Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       FOOTER
+  ══════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="social-icons mb-2">
+        <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
+      </div>
+      <p class="mb-0">&copy; 2026 <span class="brand">TechStore</span>. All rights reserved. &nbsp;|&nbsp; Experiment 2</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
